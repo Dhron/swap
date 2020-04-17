@@ -1,14 +1,26 @@
-// main.go
-
 package main
 
 import (
-	"fmt"
+	"errors"
 	"log"
 	"os"
 
 	"github.com/urfave/cli"
 )
+
+func swapFiles(fName1 string, fName2 string) error {
+	if fName1 == "" || fName2 == "" {
+		return nil
+	}
+	tmpName := "/tmp/" + fName1 // create a temporary name in /tmp
+	err := os.Rename(fName1, tmpName)
+	err = os.Rename(fName2, fName1)
+	err = os.Rename(tmpName, fName2)
+	if err != nil {
+		return errors.New("swap failure")
+	}
+	return nil
+}
 
 func main() {
 	app := &cli.App{
@@ -18,14 +30,10 @@ func main() {
 			if c.NArg() > 1 {
 				fName1 := c.Args().Get(0)
 				fName2 := c.Args().Get(1)
-				tmpName := "/tmp/" + fName1 // create a temporary name
-				os.Rename(fName1, tmpName)
-				os.Rename(fName2, fName1)
-				os.Rename(tmpName, fName2)
-				fmt.Println("swapped " + fName1 + " with " + fName2)
-				return nil
+				res := swapFiles(fName1, fName2)
+				return res
 			}
-			return nil
+			return errors.New("Usage: swap [file1] file[2]")
 		},
 	}
 
