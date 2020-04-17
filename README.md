@@ -12,13 +12,12 @@ Step 2: Build the source
 
 `cd swap && go build`
 
-Step 3: Move the binary to an execuatable folder
+Step 3: Move the binary to an executable folder
 
 `mv swap /usr/local/bin`
 
-Note: make sure you have the above path added you your environment variable!
-
+Note: make sure you have the above path added to your `PATH` environment variable!
 
 e.g. `export PATH="$PATH:/usr/local/bin"`
 
-Step 4: Enjoy! :blush: :v:
+Step 4: Enjoy! :blush::v:
